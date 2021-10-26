@@ -24,13 +24,16 @@
           <Hotkey></Hotkey>
           <RadioFilter :clothes="this.clothes"
           :accesories="this.accesories"
-          ></RadioFilter>
+          @radioAll="radioAll"
+          @radioClothes="radioClothes"
+          @radioAccesories="radioAccesories"></RadioFilter>
           <media-card :is-open="isShowModal" @open="openModal"
           @cardData="openCard"
                       @clothesData="setClothes"
           @accesoriesData="setAccesories"
           :only-cloth="this.clothes"
-          :only-accesories="this.accesories"></media-card>
+          :only-accesories="this.accesories"
+          :choice="myChoice"></media-card>
         </div>
       </main>
     </div>
@@ -67,6 +70,7 @@ export default {
       user: {},
       clothes: [],
       accesories: [],
+      myChoice: '',
     };
   },
   methods: {
@@ -95,6 +99,15 @@ export default {
     },
     setAccesories(accesories) {
       this.accesories = accesories;
+    },
+    radioAll(choice) {
+      this.myChoice = choice;
+    },
+    radioClothes(choice) {
+      this.myChoice = choice;
+    },
+    radioAccesories(choice) {
+      this.myChoice = choice;
     },
   },
 };
