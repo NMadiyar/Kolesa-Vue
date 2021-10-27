@@ -31,12 +31,12 @@ export default {
     axios.get('templates/-_RLsEGjof6i/data')
       .then((response) => {
         this.clothes = response.data;
-        this.$emit('clothesData', this.clothes);
+        this.$emit('updateClothes', this.clothes);
       });
     axios.get('templates/q3OPxRyEcPvP/data')
       .then((res) => {
         this.accesories = res.data;
-        this.$emit('accesoriesData', this.accesories);
+        this.$emit('updateAccesories', this.accesories);
       });
   },
   data() {
@@ -61,22 +61,22 @@ export default {
     },
     setCards() {
       if (this.choice === '2') {
-        return this.clothes;
+        return this.clothesSorted();
       } if (this.choice === '3') {
-        return this.accesories;
-      } return this.bigArray();
+        return this.accesoriesSorted();
+      } return this.allProductsSorted();
     },
-    bigArray() {
+    allItems() {
       return [...this.clothes, ...this.accesories];
     },
-    arrayBadge() {
-      return this.bigArray.filter((item) => item.isNew);
-    },
-    arrayNoBadge() {
-      return this.bigArray.filter((item) => !item.isNew);
-    },
     allProductsSorted() {
-      return [...this.arrayBadge, ...this.arrayNoBadge];
+      return this.allItems().sort((a, b) => Number(b.isNew) - Number(a.isNew));
+    },
+    clothesSorted() {
+      return this.clothes.sort((a, b) => Number(b.isNew) - Number(a.isNew));
+    },
+    accesoriesSorted() {
+      return this.accesories.sort((a, b) => Number(b.isNew) - Number(a.isNew));
     },
   },
 };

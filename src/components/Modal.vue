@@ -1,6 +1,6 @@
 <template>
   <div class="js_test" v-if="isOpen">
-    <div class="modal">
+    <div class="modal" @click.self="closeModal">
       <div class="modal__container">
         <div class="modal__image">
           <img :src='data.mainImage' alt="shirt" width="330" height="330">

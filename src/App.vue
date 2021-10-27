@@ -2,8 +2,8 @@
   <div id="app">
     <modal :is-open="isShowModal" @close="closeModal"
            :data="modalData"
-    @order="setScore"
-    :current-score="this.user.score"></modal>
+           @order="setScore"
+           :current-score="this.user.score"></modal>
     <div class="container">
       <header class="header">
         <div class="header__block">
@@ -23,17 +23,18 @@
                alt="banner" width="1038" height="335">
           <Hotkey></Hotkey>
           <RadioFilter :clothes="this.clothes"
-          :accesories="this.accesories"
-          @radioAll="radioAll"
-          @radioClothes="radioClothes"
-          @radioAccesories="radioAccesories"></RadioFilter>
+                :accesories="this.accesories"
+                @radioAll="onRadioChange"
+                @radioClothes="onRadioChange"
+                @radioAccesories="onRadioChange">
+          </RadioFilter>
           <media-card :is-open="isShowModal" @open="openModal"
-          @cardData="openCard"
-                      @clothesData="setClothes"
-          @accesoriesData="setAccesories"
-          :only-cloth="this.clothes"
-          :only-accesories="this.accesories"
-          :choice="myChoice"></media-card>
+                @cardData="openCard" @updateClothes="setClothes"
+                @updateAccesories="setAccesories"
+                :only-cloth="this.clothes"
+                :only-accesories="this.accesories"
+                :choice="myChoice">
+          </media-card>
         </div>
       </main>
     </div>
@@ -100,13 +101,7 @@ export default {
     setAccesories(accesories) {
       this.accesories = accesories;
     },
-    radioAll(choice) {
-      this.myChoice = choice;
-    },
-    radioClothes(choice) {
-      this.myChoice = choice;
-    },
-    radioAccesories(choice) {
+    onRadioChange(choice) {
       this.myChoice = choice;
     },
   },
