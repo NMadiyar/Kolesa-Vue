@@ -1,9 +1,5 @@
 <template>
   <div id="app">
-    <modal :is-open="isShowModal" @close="closeModal"
-           :data="modalData"
-           @order="setScore"
-           :current-score="this.user.score"></modal>
     <div class="container">
       <header class="header">
         <div class="header__block">
@@ -15,54 +11,28 @@
         </div>
       </header>
     </div>
-    <div class="container">
-      <main class="main">
-        <Nav></Nav>
-        <div class="main__content">
-          <img class="main__banner" src="@/assets/image.jpg"
-               alt="banner" width="1038" height="335">
-          <Hotkey></Hotkey>
-          <RadioFilter :clothes="this.clothes"
-                :accesories="this.accesories"
-                @radioAll="onRadioChange"
-                @radioClothes="onRadioChange"
-                @radioAccesories="onRadioChange">
-          </RadioFilter>
-          <media-card :is-open="isShowModal" @open="openModal"
-                @cardData="openCard" @updateClothes="setClothes"
-                @updateAccesories="setAccesories"
-                :only-cloth="this.clothes"
-                :only-accesories="this.accesories"
-                :choice="myChoice">
-          </media-card>
-        </div>
-      </main>
+    <div class="container" style="display: flex">
+      <Nav></Nav>
+      <router-view :user="user">
+      </router-view>
     </div>
 <Footer></Footer>
   </div>
 </template>
 
 <script>
-import Modal from './components/Modal.vue';
-import MediaCard from './components/MediaCard.vue';
-import InfoBlock from './components/InfoBlock.vue';
-import SearchBlock from './components/SearchBlock.vue';
-import Nav from './components/Nav.vue';
-import Hotkey from './components/Hotkey.vue';
-import RadioFilter from './components/RadioFilter.vue';
-import Footer from './components/Footer.vue';
+import InfoBlock from './layouts/components/InfoBlock.vue';
+import SearchBlock from './layouts/components/SearchBlock.vue';
+import Footer from './layouts/components/Footer.vue';
+import Nav from './layouts/components/Nav.vue';
 
 export default {
   name: 'App',
   components: {
+    Nav,
     Footer,
     InfoBlock,
-    Modal,
-    MediaCard,
     SearchBlock,
-    Nav,
-    Hotkey,
-    RadioFilter,
   },
   data() {
     return {

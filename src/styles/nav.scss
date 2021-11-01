@@ -50,6 +50,10 @@
             border-radius: 10px;
             margin-right: 8px;
             margin-left: -10px;
+            background-image: url("./assets/Rectangle3.svg");
+            background-position: left center;
+            background-repeat: no-repeat;
+            padding-left: 10px;
 
             &:focus {
                 display: flex;
