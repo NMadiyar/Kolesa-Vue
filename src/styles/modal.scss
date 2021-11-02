@@ -105,6 +105,16 @@
             justify-content: end;
         }
 
+        &--pts {
+            background: yellow;
+        }
+
+        &--howToPts {
+            width: 282px;
+            height: 44px;
+            margin: 68px 24px 24px 24px;
+        }
+
         &:hover {
             background: $lightGreen;
         }

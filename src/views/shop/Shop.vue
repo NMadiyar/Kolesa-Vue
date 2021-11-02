@@ -65,9 +65,6 @@ export default {
     setScore(cost) {
       this.closeModal();
       this.user.score -= cost;
-      if (this.user.score <= 0) {
-        alert('У вас недостаточно средств!');
-      }
     },
     setClothes(clothes) {
       this.clothes = clothes;

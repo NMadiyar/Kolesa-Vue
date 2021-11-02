@@ -11,6 +11,8 @@ export default new Vuex.Store({
       score: 0,
       avatarUrl: '',
     },
+    clothes: {},
+    accesories: {},
   },
   mutations: {
     updateUserInfo(state, response) {
@@ -18,6 +20,12 @@ export default new Vuex.Store({
     },
     setNewScore(state, newScore) {
       state.userInfo.score -= newScore;
+    },
+    updateClothes(state, response) {
+      state.clothes = response;
+    },
+    updateAccesories(state, response) {
+      state.accesories = response;
     },
   },
   actions: {
@@ -27,6 +35,19 @@ export default new Vuex.Store({
           if (response && Object.keys(response).length) {
             commit('updateUserInfo', response.data);
           }
+        });
+    },
+    fetchClothes({ commit }) {
+      axios.get('templates/-_RLsEGjof6i/data')
+        .then((response) => {
+          console.log(response.data);
+          commit('updateClothes', response.data);
+        });
+    },
+    fetchAccesories({ commit }) {
+      axios.get('templates/q3OPxRyEcPvP/data')
+        .then((res) => {
+          commit('updateAccesories', res.data);
         });
     },
   },
