@@ -7,13 +7,13 @@
             <img src="./assets/KolesaGroup.png"  height="35" width="215" alt="Kolesa logo">
           </div>
           <SearchBlock></SearchBlock>
-          <info-block @userInfo="userInfo" :user="user"></info-block>
+          <info-block></info-block>
         </div>
       </header>
     </div>
     <div class="container" style="display: flex">
       <Nav></Nav>
-      <router-view :user="user">
+      <router-view>
       </router-view>
     </div>
 <Footer></Footer>
@@ -38,7 +38,6 @@ export default {
     return {
       isShowModal: false,
       modalData: {},
-      user: {},
       clothes: [],
       accesories: [],
       myChoice: '',
@@ -54,9 +53,6 @@ export default {
     openCard(data) {
       this.openModal();
       this.modalData = data;
-    },
-    userInfo(info) {
-      this.user = info;
     },
     setScore(cost) {
       this.closeModal();

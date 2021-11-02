@@ -29,7 +29,7 @@
             <div class="modal__balance">
               <div>
                 <p class="modal__text">Твой баланс:</p>
-                <p class='modal__pts'>{{currentScore}} баллов</p>
+                <p class='modal__pts'>{{userInfo.score}} баллов</p>
               </div>
               <div class="modal__bags">
                 <img src="@/assets/bags.png" alt="bags" width="40" height="41">
@@ -94,6 +94,8 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 export default {
   name: 'Modal',
   props: {
@@ -107,6 +109,11 @@ export default {
       modalData: {},
     };
   },
+  computed: {
+    ...mapState({
+      userInfo: 'userInfo',
+    }),
+  },
   methods: {
     closeModal() {
       this.$emit('close');
@@ -115,7 +122,7 @@ export default {
       this.$emit('open');
     },
     order() {
-      this.$emit('order', this.data.price);
+      this.closeModal();
     },
   },
 };

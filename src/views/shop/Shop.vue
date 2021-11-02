@@ -20,8 +20,7 @@
       </div>
       <Modal :is-open="isShowModal" @close="closeModal"
              :data="modalData"
-             @order="setScore"
-             :current-score="this.user.score">
+             >
       </Modal>
     </main>
 </template>
@@ -62,9 +61,6 @@ export default {
     openCard(data) {
       this.openModal();
       this.modalData = data;
-    },
-    userInfo(info) {
-      this.user = info;
     },
     setScore(cost) {
       this.closeModal();

@@ -1,35 +1,33 @@
 <template>
   <button class="header__info">
     <div>
-      <img class="header__avatar" src="@/assets/MaskGroup.png"
+      <img class="header__avatar" :src=userInfo.avatarUrl
            alt="avatar" width="44" height="44">
     </div>
     <div>
-      <div class="header__name">{{info.name}}</div>
-      <div class="header__pts">{{info.score}} баллов</div>
+      <div class="header__name">{{userInfo.name}}</div>
+      <div class="header__pts">{{userInfo.score}} баллов</div>
     </div>
   </button>
 </template>
 
 <script>
-import axios from '@/axios';
+import { mapState } from 'vuex';
 
 export default {
   name: 'InfoBlock',
-  props: {
-    user: Object,
-  },
   mounted() {
-    axios.get('templates/7ZW3y5GAuIge/data')
-      .then((response) => {
-        this.info = response.data;
-        this.$emit('userInfo', this.info);
-      });
+    this.fetchUser();
   },
-  data() {
-    return {
-      info: {},
-    };
+  computed: {
+    ...mapState({
+      userInfo: 'userInfo',
+    }),
+  },
+  methods: {
+    fetchUser() {
+      this.$store.dispatch('getUserInfo');
+    },
   },
 };
 </script>
