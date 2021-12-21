@@ -6,6 +6,8 @@
     height: 100%;
     background: rgba(0, 0, 0, 0.6);
     position: fixed;
+    left: 0;
+    top: 0;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -101,6 +103,16 @@
             background: none;
             border: none;
             justify-content: end;
+        }
+
+        &--pts {
+            background: yellow;
+        }
+
+        &--howToPts {
+            width: 282px;
+            height: 44px;
+            margin: 20px 24px 24px 24px;
         }
 
         &:hover {

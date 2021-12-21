@@ -4,19 +4,15 @@
       <div class="modal__container">
         <div class="modal__image">
           <img :src='data.mainImage' alt="shirt" width="330" height="330">
-          <div class="modal__variations">
-            <input type="radio" id="img_radio1" name="img_radio" value="1">
-            <label for="img_radio1">
-              <img src="@/assets/photo1.png" alt="clothes1" height="50" width="50">
-            </label>
-            <input type="radio" id="img_radio2" name="img_radio" value="2" checked>
-            <label for="img_radio2">
-              <img src="@/assets/photo2.png" alt="clothes2" height="50" width="50">
-            </label>
-            <input type="radio" id="img_radio3" name="img_radio" value="3">
-            <label for="img_radio3">
-              <img src="@/assets/photo3.png" alt="clothes3" height="50" width="50">
-            </label>
+          <div class="modal__variations" >
+            <div class="modal__variations_sub"
+                 v-for="(minImage, index) in data.images" :key="index">
+              <input type="radio" id="img_radio1" name="img_radio"
+                     value="1" checked v-model="checked">
+              <label for="img_radio1">
+                <img :src="minImage" alt="clothes1" height="50" width="50">
+              </label>
+            </div>
           </div>
         </div>
         <div class="modal__content">
@@ -24,12 +20,17 @@
           <div class="modal__block">
             <div>
               <h2 class="modal__price">{{data.price}} баллов</h2>
-              <button class="modal__btn" type="button" @click="order">Заказать</button>
+              <button v-if="userInfo.score > 0" class="modal__btn" type="button"
+                      @click="order">Заказать</button>
+              <button v-else
+                      class="modal__btn--pts" type="button" @click="order">
+                Попросить {{Math.abs(getNewPoints())}} баллов
+              </button>
             </div>
             <div class="modal__balance">
               <div>
                 <p class="modal__text">Твой баланс:</p>
-                <p class='modal__pts'>{{currentScore}} баллов</p>
+                <p class='modal__pts'>{{userInfo.score}} баллов</p>
               </div>
               <div class="modal__bags">
                 <img src="@/assets/bags.png" alt="bags" width="40" height="41">
@@ -94,18 +95,25 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 export default {
   name: 'Modal',
   props: {
     isOpen: Boolean,
     data: Object,
-    currentScore: Number,
   },
   data() {
     return {
       isShowModal: false,
       modalData: {},
+      checked: true,
     };
+  },
+  computed: {
+    ...mapState({
+      userInfo: 'userInfo',
+    }),
   },
   methods: {
     closeModal() {
@@ -115,8 +123,44 @@ export default {
       this.$emit('open');
     },
     order() {
-      this.$emit('order', this.data.price);
+      this.closeModal();
+      if (this.userInfo.score <= 0) {
+        alert('У вас недостаточно средств!');
+
+        return;
+      }
+      this.$store.commit('setNewScore', this.data.price);
+    },
+    getNewPoints() {
+      return this.userInfo.score - this.data.price;
     },
   },
 };
 </script>
+
+<style scoped>
+  .modal__variations_sub {
+    display: flex;
+  }
+  .modal__btn--pts {
+    background: #4b4b07;
+    box-shadow: 0 2px 4px rgba(28, 24, 25, 0.1);
+    border-radius: 8px;
+    border: none;
+    width: 184px;
+    height: 36px;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 24px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    color: white;
+    padding: 6px 0;
+  }
+  .modal__btn--pts:hover {
+    background: #38ff93;
+  }
+</style>

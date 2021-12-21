@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import axios from '@/axios';
+import { mapState } from 'vuex';
 
 export default {
   name: 'MediaCard',
@@ -28,26 +28,22 @@ export default {
     choice: String,
   },
   mounted() {
-    axios.get('templates/-_RLsEGjof6i/data')
-      .then((response) => {
-        this.clothes = response.data;
-        this.$emit('updateClothes', this.clothes);
-      });
-    axios.get('templates/q3OPxRyEcPvP/data')
-      .then((res) => {
-        this.accesories = res.data;
-        this.$emit('updateAccesories', this.accesories);
-      });
+    this.fetchClothes();
+    this.fetchAccesories();
   },
   data() {
     return {
-      clothes: [],
-      accesories: [],
       isShowModal: false,
       modalData: {},
       newData: {},
       oldData: {},
     };
+  },
+  computed: {
+    ...mapState({
+      clothes: 'clothes',
+      accesories: 'accesories',
+    }),
   },
   methods: {
     closeModal() {
@@ -77,6 +73,12 @@ export default {
     },
     accesoriesSorted() {
       return this.accesories.sort((a, b) => Number(b.isNew) - Number(a.isNew));
+    },
+    fetchClothes() {
+      this.$store.dispatch('fetchClothes');
+    },
+    fetchAccesories() {
+      this.$store.dispatch('fetchAccesories');
     },
   },
 };
